@@ -1,10 +1,13 @@
 package com.example.aplicacionconconexionresapi;
 
-import javafx.collections.ObservableList;
 import retrofit2.Call;
-import retrofit2.http.*;
+import retrofit2.http.GET;
+
+import java.util.List;
 
 public interface GasolineraInterface {
-    @GET("ResultadoConsulta")
-    Call<ObservableList<Gasolinera>> cargarGasolineras();
+
+    @GET("ListaEESSPrecio")
+
+    Call<List<Gasolinera>> listProductos();
 }
