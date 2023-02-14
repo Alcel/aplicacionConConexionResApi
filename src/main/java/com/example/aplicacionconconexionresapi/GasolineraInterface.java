@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface GasolineraInterface {
 
-    @GET("ListaEESSPrecio")
+    @GET("eevee")
 
-    Call<List<Gasolinera>> listProductos();
+    Call<Pokemon> listProductos();
 }

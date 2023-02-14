@@ -10,40 +10,53 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.List;
 
-public class ProductoController implements Callback<List<Gasolinera>> {
+public class ProductoController implements Callback<List<Pokemon>> {
 
-    static final String BASE_URL = "https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/";
+    static final String BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
 
     public void start() {
 
-        Gson gson = new GsonBuilder()
+        /*Gson gson = new GsonBuilder()
                 .setLenient()
-                .create();
+                .create();*/
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create(/*gson*/))
                 .build();
         System.out.println("E");
         GasolineraInterface productosAPI = retrofit.create(GasolineraInterface.class);
 
-        Call<List<Gasolinera>> call = productosAPI.listProductos();
-        call.enqueue(this);
+        Call<Pokemon> call = productosAPI.listProductos();
+        Callback<Pokemon> pokemon;
+        call.enqueue( new Callback<Pokemon>(){
+
+
+            @Override
+            public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
+                System.out.println(response);
+            }
+
+            @Override
+            public void onFailure(Call<Pokemon> call, Throwable throwable) {
+
+            }
+        });
 
     }
 
     @Override
-    public void onResponse(Call<List<Gasolinera>> call, Response<List<Gasolinera>> response) {
+    public void onResponse(Call<List<Pokemon>> call, Response<List<Pokemon>> response) {
         if(response.isSuccessful()) {
-            List<Gasolinera> changesList = response.body();
-            changesList.forEach(change -> System.out.println(change.getFecha()));
+            List<Pokemon> changesList = response.body();
+            //changesList.forEach(change -> System.out.println(change.getFecha()));
         } else {
             System.out.println(response.errorBody());
         }
     }
 
     @Override
-    public void onFailure(Call<List<Gasolinera>> call, Throwable throwable) {
+    public void onFailure(Call<List<Pokemon>> call, Throwable throwable) {
         throwable.printStackTrace();
     }
 }
